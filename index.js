@@ -1,11 +1,15 @@
-const {Client, Events, SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, PermissionsBitField
+require('dotenv').config();
+
+const {Client, Events, SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, PermissionsBitField, GatewayIntentBits
 
 } = require('discord.js');
-const {token} = require('./config.json');
+const token = process.env.DISCORD_TOKEN;
 const { DateTime } = require('luxon');
 
 
-const client = new Client({intents: ['GuildMessages', 'MessageContent'] });
+const client = new Client({intents: [GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent] });
 const userData = new Map(); //Data structure for memory storage
 const path = require('path');
 const XP_FILE = path.join(__dirname, 'xp.json');
@@ -185,7 +189,7 @@ client.on(Events.InteractionCreate, async interaction => {
     askTrivia(interaction, 0, used);
     //return interaction.reply("TESTING. OUTPUT RECIEVED.");
   }
-  else if(interaction.commandName === 'green'){
+  else if(interaction.commandName === 'gsky'){
     const filePath = path.join(__dirname, 'the1.jpg')
     const greenImage = new AttachmentBuilder(filePath, {
       name:'the1.jpg'
